@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  
+  backend:
+    build:
+      context: $HOME/web_application/backend/
+      dockerfile: $HOME/web_application/local_deploy/Dockerfile_django
+    container_name: backend_auth
+    env_file: .env
+    volumes: 
+      - $HOME/web_application/backend/:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth_db
+    links:
+      - auth_db
+    networks:
+      - mynetwork
+
+  auth_db:
+    build:
+      context: .
+      dockerfile: Dockerfile_mysql
+    restart: always
+    container_name: mysql
+    env_file:
+      - .env
+    volumes:
+      - $HOME/web_application/data/:/var/lib/postgresql/data
+    ports:
+      - "3306:3306"      
+    networks:
+      - mynetwork 
+
+networks:
+  mynetwork:
+    driver: bridge
