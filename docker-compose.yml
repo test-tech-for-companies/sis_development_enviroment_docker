@@ -27,7 +27,7 @@ services:
     env_file:
       - .env
     volumes:
-      - $HOME/web_application/data/:/var/lib/postgresql/data
+      - $HOME/web_application/data/:/var/lib/mysql
     ports:
       - "3306:3306"      
     networks:
