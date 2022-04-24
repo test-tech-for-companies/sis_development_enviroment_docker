@@ -31,7 +31,21 @@ services:
     ports:
       - "3306:3306"      
     networks:
-      - mynetwork 
+      - mynetwork
+
+  angularfrontend:
+    build:
+      context: $HOME/web_application/frontend/
+      dockerfile: $HOME/web_application/local_deploy/Dockerfile_node
+    container_name: angular
+    volumes:
+      - $HOME/web_application/frontend/:/code
+      - /code/node_modules
+    ports:
+      - "4000:4000"
+    networks:
+      - mynetwork
+
 
 networks:
   mynetwork:

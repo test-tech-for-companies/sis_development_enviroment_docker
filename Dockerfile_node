@@ -1,0 +1,17 @@
+FROM node:14.18
+
+RUN yarn global add @angular/cli
+WORKDIR /code
+# COPY --chown=node:node . /code
+# USER node
+COPY package.json /code/
+
+# with Yarn
+# COPY web/yarn.lock /code/
+RUN yarn install --frozen-lockfile
+
+COPY . .
+RUN yarn install
+EXPOSE 4000
+CMD [ "yarn", "start"]
+
